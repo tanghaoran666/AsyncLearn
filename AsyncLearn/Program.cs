@@ -14,7 +14,7 @@ namespace asyncLearn
 
             Task<Egg> eggTask = FryEggs(2);
             Task<Bacon> baconTask = FryBacon(3);
-            Task<Toast> breadTask = ToastBread(2);
+            Task<Toast> toastTask = makeToast(2);
 
             Egg eggs = await eggTask;
             Console.WriteLine("eggs are ready");
@@ -22,10 +22,7 @@ namespace asyncLearn
             Bacon bacon = await baconTask;
             Console.WriteLine("bacon is ready");
 
-            var toastBread = await breadTask;
-            Toast toast = toastBread;
-            ApplyButter(toast);
-            ApplyJam(toast);
+            Toast toast = await toastTask;
             Console.WriteLine("toast is ready");
 
             Juice oj = PourOJ();
@@ -34,6 +31,14 @@ namespace asyncLearn
             
             stopwatch.Stop();
             Console.WriteLine($"time is {stopwatch.ElapsedMilliseconds}");
+        }
+
+        private static async Task<Toast> makeToast(int slices)
+        {
+            Toast toast = await ToastBread(slices);
+            ApplyButter(toast);
+            ApplyJam(toast);
+            return toast;
         }
 
         private static Juice PourOJ()
