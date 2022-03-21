@@ -12,21 +12,17 @@ namespace asyncLearn
             Coffee cup = PourCoffee();
             Console.WriteLine("coffee is ready");
 
-            Task<Egg> eggTask = FryEggs(2);
+            Task<Egg> eggsTask = FryEggs(2);
             Task<Bacon> baconTask = FryBacon(3);
             Task<Toast> toastTask = makeToast(2);
 
-            Egg eggs = await eggTask;
-            Console.WriteLine("eggs are ready");
-
-            Bacon bacon = await baconTask;
-            Console.WriteLine("bacon is ready");
-
-            Toast toast = await toastTask;
-            Console.WriteLine("toast is ready");
-
             Juice oj = PourOJ();
             Console.WriteLine("oj is ready");
+            
+            await Task.WhenAll(eggsTask, baconTask, toastTask);
+            Console.WriteLine("Eggs are ready");
+            Console.WriteLine("Bacon is ready");
+            Console.WriteLine("Toast is ready");
             Console.WriteLine("Breakfast is ready!");
             
             stopwatch.Stop();
